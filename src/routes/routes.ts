@@ -7,4 +7,10 @@ export const Routes = [
     controller: CompanyController,
     action: 'signUp',
   },
+  {
+    method: 'post',
+    route: '/login',
+    controller: CompanyController,
+    action: 'login'
+  }
 ];

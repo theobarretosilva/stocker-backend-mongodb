@@ -18,29 +18,30 @@ async function bootstrap() {
 
   const companyController = new CompanyController();
   app.route('/company/signup').post(companyController.signUp);
+  app.route('/company/login').post(companyController.login);
 
-  // Routes.forEach((route) => {
-  //   (app as any)[route.method](
-  //     route.route,
-  //     isLoggedIn,
-  //     (req: Request, res: Response, next: NextFunction) => {
-  //       const result = new (route.controller as any)()[route.action](
-  //         req,
-  //         res,
-  //         next,
-  //       );
-  //       if (result instanceof Promise) {
-  //         result.then((result) =>
-  //           result !== null && result !== undefined
-  //             ? res.send(result)
-  //             : undefined,
-  //         );
-  //       } else if (result !== null && result !== undefined) {
-  //         res.json(result);
-  //       }
-  //     },
-  //   );
-  // });
+  Routes.forEach((route) => {
+    (app as any)[route.method](
+      route.route,
+      isLoggedIn,
+      (req: Request, res: Response, next: NextFunction) => {
+        const result = new (route.controller as any)()[route.action](
+          req,
+          res,
+          next,
+        );
+        if (result instanceof Promise) {
+          result.then((result) =>
+            result !== null && result !== undefined
+              ? res.send(result)
+              : undefined,
+          );
+        } else if (result !== null && result !== undefined) {
+          res.json(result);
+        }
+      },
+    );
+  });
 
   app.listen(3000);
 }

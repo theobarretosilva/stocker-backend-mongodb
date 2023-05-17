@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import CompanySchema from './model/CompanySchema';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken'
 
 export class CompanyController {
   async signUp(request: Request, response: Response) {
@@ -16,6 +17,7 @@ export class CompanyController {
       }
 
       request.body.password = await bcrypt.hash(request.body.password, 10);
+      request.body.confirm_password = '';
 
       const newCompany = await CompanySchema.create(request.body);
       newCompany.password = '';
@@ -24,6 +26,33 @@ export class CompanyController {
       return response.status(500).json({
         error: 'There was an error, try again later',
       });
+    }
+  }
+
+  async login(request: Request, response: Response) {
+    try {
+      const company = await CompanySchema.findOne({ email: request.body.email })
+      if (!company) {
+        return response.status(401).json({
+          error: 'Email or password are incorrect'
+        })
+      }
+
+      const result = await bcrypt.compare(request.body.password, company.password)
+      if (result) {
+        const { SECRET = 'secret' } = process.env
+        const token = jwt.sign({ email: company.email, responsible: company.responsible, company_name: company.company_name, _id: company._id}, SECRET)
+        company.password = ''
+        return response.json({ token, company })
+      }
+
+      return response.status(401).json({
+        error: 'Email or password are incorrect'
+      })
+    } catch (error) {
+      return response.status(500).json({
+        error: 'Failed to login!'
+      })
     }
   }
 }
