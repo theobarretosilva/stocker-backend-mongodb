@@ -19,6 +19,7 @@ async function bootstrap() {
   const companyController = new CompanyController();
   app.route('/company/signup').post(companyController.signUp);
   app.route('/company/login').post(companyController.login);
+  app.route('/company/findEmail').get(companyController.findEmail);
 
   Routes.forEach((route) => {
     (app as any)[route.method](
