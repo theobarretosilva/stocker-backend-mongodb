@@ -58,13 +58,13 @@ export class CompanyController {
 
   async findEmail(request: Request, response: Response) {
     try {
-      const company = await CompanySchema.findOne({ email: request.body.email })
+      const company = await CompanySchema.find({ email: request.body.email })
       if (!company) {
         return response.status(400).json({
           error: 'Email not found'
         })
       }
-      return response.status(302).json({
+      return response.status(200).json({
         message: 'Email found, redirecting you to password change!'
       })
     } catch (error) {
