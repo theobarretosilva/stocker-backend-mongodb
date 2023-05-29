@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import CompanySchema from './model/CompanySchema';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
+import { sendEmail } from '../api/emailSender';
 
 export class CompanyController {
   async signUp(request: Request, response: Response) {
@@ -64,8 +65,12 @@ export class CompanyController {
           error: 'Email not found'
         })
       }
+      const sendCodeEmail = await sendEmail(request.body.email);
+      
       return response.status(200).json({
-        message: 'Email found, redirecting you to password change!'
+        message: 'Email found, redirecting you to password change!',
+        code: 200,
+        resetPasswordCode: sendCodeEmail
       })
     } catch (error) {
       return response.status(500).json({
