@@ -65,7 +65,8 @@ export class CompanyController {
           error: 'Email not found'
         })
       }
-      const sendCodeEmail = await sendEmail(request.body.email);
+      console.log(request.body.data.email)
+      const sendCodeEmail = await sendEmail(request.body.data.email);
       
       return response.status(200).json({
         message: 'Email found, redirecting you to password change!',

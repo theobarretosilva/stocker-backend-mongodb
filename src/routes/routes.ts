@@ -14,7 +14,7 @@ export const Routes = [
     action: 'login'
   },
   {
-    method: 'get',
+    method: 'post',
     route: '/findEmail',
     controller: CompanyController,
     action: 'findEmail'
