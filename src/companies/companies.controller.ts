@@ -26,6 +26,7 @@ export class CompanyController {
     } catch (error) {
       return response.status(500).json({
         error: 'There was an error, try again later',
+        type: error,
       });
     }
   }
@@ -77,6 +78,43 @@ export class CompanyController {
       return response.status(500).json({
         error: 'Failed to get user!',
       })
+    }
+  }
+
+  async changePassword(request: Request, response: Response) {
+    try {
+      const { password, confirm_passowrd, email } = request.body;
+
+      const foundCompany = await CompanySchema.findOne({
+        where: {
+          email: email,
+        },
+      });
+
+      if (!foundCompany) {
+        response.status(404).json({
+          error: 'Company not found',
+        })
+      } else {
+        if (password == confirm_passowrd) {
+          const hashPassword = await bcrypt.hash(password, foundCompany.salt);
+
+          foundCompany.password = hashPassword;
+          await foundCompany.save();
+          
+          return response.status(200).json({
+            message: 'Password changed successfully',
+          });
+        } else {
+          return response.status(401).json({
+            error: 'The password confirmation or the password is incorrect',
+          });
+        }
+      }
+    } catch (error) {
+      return response.status(500).json({
+        error: 'Failed to change password',
+      });
     }
   }
 }

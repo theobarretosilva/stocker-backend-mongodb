@@ -18,5 +18,11 @@ export const Routes = [
     route: '/findEmail',
     controller: CompanyController,
     action: 'findEmail'
+  },
+  {
+    method: 'put',
+    route: '/changePassword',
+    controller: CompanyController,
+    action: 'changePassword'
   }
 ];

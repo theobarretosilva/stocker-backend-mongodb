@@ -10,7 +10,7 @@ export async function sendEmail(receiverAddress) {
             user: 'barretotheo25@gmail.com',
             clientId: '436439008291-gijmhrpum9gsi7bkiqumkt7ua2c7kt36.apps.googleusercontent.com',
             clientSecret: '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',
-            accessToken: 'ya29.a0AWY7CknBAAKXotYwXq-8_GrhPauKeAJQH8Y_UW_zgVORqfzhw34wZryqN_C5o_DjtorN6p8vIME9bxA_dd4qPzoJ4Q9eWOJ7x4ZUA9umsDvaSZaTWvhDzQurIBEWY0ZgLpIC2jrYabf2TAHLHHETI9iqnJdDiMcaCgYKAQISARESFQG1tDrp2vNbxuqbrOoy_9f6XdU-gA0166'
+            accessToken: 'ya29.a0AWY7CklFNURd-AhszZ3kVyhaRoE12YRxdvEHFKrNIl3UklfYrcP-q-wMcQje1GAbdhK8aJRow1qLTrZc7P4tCQlueYT3owsWf4w7StVkUhabgh5aeA9aSbs761XFwWtmqi-uVFlAjnHLwwl0CApforfQl0HAmq8aCgYKAWcSARESFQG1tDrp3e860kIqpkq7gzToRrzpBQ0166'
         }
     });
 

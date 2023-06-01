@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
-export interface Company {
+export interface Company extends mongoose.Document {
   _id: number;
   company_name: string;
   cnpj: string;
@@ -10,9 +11,10 @@ export interface Company {
   photo_url: string;
   salt: string;
   password: string;
+  confirm_password: string;
 }
 
-const Schema = new mongoose.Schema(
+const Schema = new mongoose.Schema<Company>(
   {
     company_name: {
       type: mongoose.Schema.Types.String,
@@ -42,12 +44,13 @@ const Schema = new mongoose.Schema(
       type: mongoose.Schema.Types.String,
       required: true,
     },
-    confirm_password: {
-      type: mongoose.Schema.Types.String,
-      required: true,
-    },
   },
   { timestamps: true },
 );
+
+Schema.methods.checkPassword = async function (password: string): Promise<boolean> {
+  const hash = await bcrypt.hash(password, this.salt);
+  return hash === this.password;
+}
 
 export default mongoose.model<Company>('Companies', Schema);

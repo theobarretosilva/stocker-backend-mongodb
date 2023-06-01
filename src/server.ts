@@ -20,6 +20,7 @@ async function bootstrap() {
   app.route('/company/signup').post(companyController.signUp);
   app.route('/company/login').post(companyController.login);
   app.route('/company/findEmail').post(companyController.findEmail);
+  app.route('/company/changePassword').put(companyController.changePassword);
 
   Routes.forEach((route) => {
     (app as any)[route.method](
