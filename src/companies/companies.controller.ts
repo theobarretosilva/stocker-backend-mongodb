@@ -17,7 +17,8 @@ export class CompanyController {
         });
       }
 
-      request.body.password = await bcrypt.hash(request.body.password, 10);
+      request.body.salt = await bcrypt.genSalt();
+      request.body.password = await bcrypt.hash(request.body.password, request.body.salt);
       request.body.confirm_password = '';
 
       const newCompany = await CompanySchema.create(request.body);
@@ -82,6 +83,7 @@ export class CompanyController {
   }
 
   async changePassword(request: Request, response: Response) {
+    console.log(request)
     try {
       const { password, confirm_passowrd, email } = request.body;
 
@@ -92,11 +94,11 @@ export class CompanyController {
       });
 
       if (!foundCompany) {
-        response.status(404).json({
+        return response.status(404).json({
           error: 'Company not found',
         })
       } else {
-        if (password == confirm_passowrd) {
+        if (password === confirm_passowrd) {
           const hashPassword = await bcrypt.hash(password, foundCompany.salt);
 
           foundCompany.password = hashPassword;

@@ -40,6 +40,10 @@ const Schema = new mongoose.Schema<Company>(
       type: mongoose.Schema.Types.String,
       required: true,
     },
+    salt: {
+      type: mongoose.Schema.Types.String,
+      required: true,
+    },
     password: {
       type: mongoose.Schema.Types.String,
       required: true,

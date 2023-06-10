@@ -8,10 +8,10 @@ export async function sendEmail(receiverAddress) {
         auth: {
             type: 'OAuth2',
             user: 'barretotheo25@gmail.com',
-            clientId: '436439008291-gijmhrpum9gsi7bkiqumkt7ua2c7kt36.apps.googleusercontent.com',
-            clientSecret: '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',
-            accessToken: 'ya29.a0AWY7CklFNURd-AhszZ3kVyhaRoE12YRxdvEHFKrNIl3UklfYrcP-q-wMcQje1GAbdhK8aJRow1qLTrZc7P4tCQlueYT3owsWf4w7StVkUhabgh5aeA9aSbs761XFwWtmqi-uVFlAjnHLwwl0CApforfQl0HAmq8aCgYKAWcSARESFQG1tDrp3e860kIqpkq7gzToRrzpBQ0166'
-        }
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            accessToken: process.env.ACCESS_TOKEN,
+        },
     });
 
     const code = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
@@ -27,11 +27,11 @@ export async function sendEmail(receiverAddress) {
 
     try {
         await transport.sendMail(mailOptions);
-        console.log(`Email sent successfully \n Code: ${code}`)
+        console.log(`Email sent successfully! \n Code: ${code}`);
     } catch (error) {
         console.error('Error sending email:', error);
-    }
+    };
     
 
     return code;
-}
+};

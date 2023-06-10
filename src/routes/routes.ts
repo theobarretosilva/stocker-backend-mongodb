@@ -20,7 +20,7 @@ export const Routes = [
     action: 'findEmail'
   },
   {
-    method: 'put',
+    method: 'patch',
     route: '/changePassword',
     controller: CompanyController,
     action: 'changePassword'
